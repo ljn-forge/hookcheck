@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"hookcheck"
+	"github.com/ljn-forge/hookcheck"
 )
 
 func writeReport(path string, report hookcheck.Report) error {

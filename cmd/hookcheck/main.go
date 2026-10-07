@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"hookcheck/internal/cli"
+	"github.com/ljn-forge/hookcheck/internal/cli"
 )
 
 func main() {

@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"hookcheck"
+	"github.com/ljn-forge/hookcheck"
 )
 
 type hurlCheck struct {

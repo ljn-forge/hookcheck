@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"hookcheck/internal/demo"
+	"github.com/ljn-forge/hookcheck/internal/demo"
 )
 
 func main() { os.Exit(run()) }

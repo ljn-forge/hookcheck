@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"hookcheck"
+	"github.com/ljn-forge/hookcheck"
 )
 
 // Run returns a process exit code without terminating the calling process.

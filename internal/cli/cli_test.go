@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"hookcheck"
-	"hookcheck/internal/demo"
+	"github.com/ljn-forge/hookcheck"
+	"github.com/ljn-forge/hookcheck/internal/demo"
 )
 
 const scenarioJSON = `{"version":1,"name":"cli-test","seed":1,"steps":[{"name":"event","path":"/webhooks","events":[{"name":"event-1","body":{},"repeat":3}]}],"checks":[{"name":"business","path":"/state","fields":{"grants":1}}]}`

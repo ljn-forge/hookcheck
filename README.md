@@ -10,6 +10,19 @@ An HTTP 200 proves that an endpoint responded. Hookcheck also checks the resulti
 
 Requires Go 1.25+. The core binary has no third-party Go dependencies. Initial supported platforms: macOS and Linux.
 
+Install the CLI directly:
+
+```sh
+go install github.com/ljn-forge/hookcheck/cmd/hookcheck@latest
+```
+
+To run the included demo, clone [the repository](https://github.com/ljn-forge/hookcheck) and build both executables:
+
+```sh
+git clone https://github.com/ljn-forge/hookcheck.git
+cd hookcheck
+```
+
 ```sh
 make build
 export HOOKCHECK_DEMO_SECRET=example-only-secret
@@ -144,7 +157,7 @@ Hurl files are trusted executable test inputs: they can address other hosts, use
 
 `--report FILE` replaces the destination atomically with a private JSON file. On cancellation, a partial report identifies unsent deliveries and unrun checks. It records metadata, status, timing and assertion field names; it excludes bodies, headers, URLs and secret values. Keep sensitive values out of scenario/event/check names as those are user-provided report metadata. A report cannot overwrite the scenario or Hurl input file.
 
-Use the exit code as a CI gate and keep the report as a private diagnostic artifact. Reports alone do not contain enough data to replay a run: retain the original scenario, binary version, target environment and seed. The included workflow tests Go 1.25/1.26 on Linux/macOS; remote CI executes after the repository is published.
+Use the exit code as a CI gate and keep the report as a private diagnostic artifact. Reports alone do not contain enough data to replay a run: retain the original scenario, binary version, target environment and seed. The included workflow tests Go 1.25/1.26 on Linux/macOS; see [GitHub Actions](https://github.com/ljn-forge/hookcheck/actions) for remote results.
 
 ## Development
 
@@ -156,7 +169,7 @@ make smoke        # real compiled CLI + demo services
 
 The execution core is the root Go package. Its `Run` API rejects scenarios with `hurl_file` so external assertions cannot be silently skipped; those scenarios require the CLI. CLI/files/processes live in `internal/cli`; the synchronized in-memory fixture lives in `internal/demo`. See [design](docs/superpowers/specs/2026-10-07-hookcheck-design.md), [verification](docs/verification.md) and [contributing](CONTRIBUTING.md).
 
-The module currently uses the local name `hookcheck`. Set its canonical GitHub module path when choosing the public repository owner; no remote repository is assumed by the examples.
+The module path is `github.com/ljn-forge/hookcheck`. Import the root package to execute native scenarios from Go, or install `cmd/hookcheck` for the CLI and external Hurl checks.
 
 ## License
 

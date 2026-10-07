@@ -10,6 +10,19 @@ HTTP 返回成功后，权益仍可能重复发放，订单状态也可能被旧
 
 需要 Go 1.25+，核心 Go 项目没有第三方依赖。第一版支持 macOS、Linux。
 
+直接安装命令行工具：
+
+```sh
+go install github.com/ljn-forge/hookcheck/cmd/hookcheck@latest
+```
+
+运行完整示例时，先克隆 [GitHub 仓库](https://github.com/ljn-forge/hookcheck)：
+
+```sh
+git clone https://github.com/ljn-forge/hookcheck.git
+cd hookcheck
+```
+
 ```sh
 make build
 export HOOKCHECK_DEMO_SECRET=example-only-secret
@@ -80,4 +93,4 @@ make fuzz
 make smoke
 ```
 
-参见 [验证记录](docs/verification.md)、[设计边界](docs/superpowers/specs/2026-10-07-hookcheck-design.md) 和 [贡献指南](CONTRIBUTING.md)。项目附带 MIT 协议和 GitHub Actions 配置；发布后才会产生远端 CI 运行记录。
+参见 [本地验证记录](docs/verification.md)、[设计边界](docs/superpowers/specs/2026-10-07-hookcheck-design.md) 和 [贡献指南](CONTRIBUTING.md)。项目附带 MIT 协议，远端结果可在 [GitHub Actions](https://github.com/ljn-forge/hookcheck/actions) 查看。
