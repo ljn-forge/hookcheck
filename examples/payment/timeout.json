@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "name": "accepted payment with uncertain acknowledgement",
+  "seed": 42,
+  "timeout": "2s",
+  "signing": {
+    "header": "X-Hookcheck-Signature",
+    "secret_env": "HOOKCHECK_DEMO_SECRET"
+  },
+  "steps": [
+    {
+      "name": "reset fixture",
+      "path": "/reset",
+      "expect_status": 204,
+      "events": [
+        {
+          "name": "reset",
+          "body": {}
+        }
+      ]
+    },
+    {
+      "name": "commit before timeout",
+      "path": "/webhooks",
+      "timeout": "20ms",
+      "expect_status": 204,
+      "events": [
+        {
+          "name": "paid",
+          "body": {
+            "id": "timeout-paid",
+            "order_id": "demo-order",
+            "status": "paid",
+            "version": 2
+          }
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "committed once despite lost ACK",
+      "path": "/state",
+      "within": "1s",
+      "interval": "10ms",
+      "fields": {
+        "grants": 1,
+        "status": "paid",
+        "version": 2
+      }
+    }
+  ]
+}

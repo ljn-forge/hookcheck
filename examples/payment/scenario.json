@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "name": "payment idempotency and stale events",
+  "seed": 42,
+  "timeout": "2s",
+  "signing": {
+    "header": "X-Hookcheck-Signature",
+    "secret_env": "HOOKCHECK_DEMO_SECRET"
+  },
+  "steps": [
+    {
+      "name": "reset fixture",
+      "path": "/reset",
+      "expect_status": 204,
+      "events": [{"name": "reset", "body": {}}]
+    },
+    {
+      "name": "duplicate paid event",
+      "path": "/webhooks",
+      "concurrency": 3,
+      "expect_status": 204,
+      "events": [
+        {"name": "paid-1", "repeat": 3, "body": {"id": "paid-1", "order_id": "demo-order", "status": "paid", "version": 2}}
+      ]
+    },
+    {
+      "name": "different event same order",
+      "path": "/webhooks",
+      "expect_status": 204,
+      "events": [
+        {"name": "paid-2", "body": {"id": "paid-2", "order_id": "demo-order", "status": "paid", "version": 3}}
+      ]
+    },
+    {
+      "name": "late stale event",
+      "path": "/webhooks",
+      "expect_status": 204,
+      "events": [
+        {"name": "pending-1", "body": {"id": "pending-1", "order_id": "demo-order", "status": "pending", "version": 1}}
+      ]
+    }
+  ],
+  "checks": [
+    {"name": "one grant per order", "path": "/state", "fields": {"grants": 1}},
+    {"name": "paid state survives stale event", "path": "/state", "fields": {"status": "paid", "version": 3}}
+  ]
+}

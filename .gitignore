@@ -1,0 +1,5 @@
+/bin/
+/*-report.json
+/coverage.out
+/.hookcheck-report-*
+/.DS_Store
