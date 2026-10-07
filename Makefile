@@ -12,7 +12,8 @@ check:
 	go build ./...
 
 fuzz:
-	go test -run '^$$' -fuzz FuzzLoad -fuzztime 10s -parallel 2 -timeout 30s .
+	# Use an execution budget so fuzzing does not end mid-request on a deadline.
+	go test -run '^$$' -fuzz FuzzLoad -fuzztime 300000x -parallel 2 -timeout 60s .
 
 smoke: build
 	python3 scripts/smoke.py
